@@ -32,7 +32,15 @@
 </head>
 <body>
 <div class="header">POP MART</div>
-<div class="container">
+
+<!-- Countdown section -->
+<div id="countdownSection" class="countdown">
+    <h2>Đếm ngược:</h2>
+    <p id="countdown">30 giây</p>
+</div>
+
+<!-- Form section (hidden initially) -->
+<div class="container" id="formSection">
     <h2>ĐĂNG KÝ THAM GIA</h2>
     <label>Sales date (Ngày bán hàng)</label>
     <select id="slNgayBanHang">
@@ -70,6 +78,7 @@
     <button class="submit-btn" onclick="showPopup()">Đăng ký</button>
 </div>
 
+<!-- Success popup -->
 <div id="popupSuccess">
   <h3 style="color:#4CAF50;">🎉 Đăng ký thành công!</h3>
   <p>Cảm ơn bạn đã tham gia chương trình POP MART.</p>
@@ -77,7 +86,20 @@
 </div>
 
 <script>
+// Countdown logic
 let countdownValue = 30;
+let countdownInterval;
+
+function updateCountdown() {
+  if (countdownValue > 0) {
+    countdownValue--;
+    document.getElementById('countdown').innerText = countdownValue + " giây";
+  } else {
+    clearInterval(countdownInterval);
+    document.getElementById('countdownSection').style.display = 'none'; // Hide countdown
+    document.getElementById('formSection').style.display = 'block'; // Show form
+  }
+}
 
 function generateCaptcha() {
   const canvas = document.getElementById('captchaCanvas');
@@ -98,24 +120,15 @@ function generateCaptcha() {
   }
 }
 
-function updateCountdown() {
-  if (countdownValue > 0) {
-    countdownValue--;
-    document.getElementById('countdown').innerText = countdownValue + " giây";
-  } else {
-    clearInterval(countdownInterval);
-    document.getElementById('countdown').style.display = 'none'; // Hide countdown
-    document.querySelector('.container').style.display = 'block'; // Show form
-  }
-}
-
 function showPopup() {
   document.getElementById('popupSuccess').style.display = 'block';
 }
 
+// Start countdown when the page is loaded
 window.onload = function() {
-  const countdownInterval = setInterval(updateCountdown, 1000); // Start countdown
+  countdownInterval = setInterval(updateCountdown, 1000); // Start countdown
 }
 </script>
+
 </body>
 </html>
