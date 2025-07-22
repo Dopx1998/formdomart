@@ -7,7 +7,7 @@
 <title>POP MART Đăng Ký</title>
 <style>
     body { font-family: Arial, sans-serif; background: white; margin: 0; padding: 0; }
-    .container { max-width: 400px; margin: 0 auto; padding: 16px; display: none; } /* Hidden initially */
+    .container { max-width: 400px; margin: 0 auto; padding: 16px; }
     .header { background-color: #e60012; color: white; font-size: 32px; font-weight: bold; text-align: center; padding: 20px; }
     h2 { text-align: center; margin-top: 10px; }
     label { font-weight: bold; display: block; margin-top: 12px; }
@@ -27,58 +27,48 @@
         background: white; border: 2px solid #4CAF50; border-radius: 12px; padding: 24px; text-align: center;
         box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;
     }
-    .countdown { text-align: center; font-size: 24px; margin-top: 20px; font-weight: bold; color: #e60012; }
 </style>
 </head>
 <body>
 <div class="header">POP MART</div>
-
-<!-- Countdown section -->
-<div id="countdownSection" class="countdown">
-    <h2>Đếm ngược:</h2>
-    <p id="countdown">30 giây</p>
+<div class="container">
+<h2>ĐĂNG KÝ THAM GIA</h2>
+<label>Sales date (Ngày bán hàng)</label>
+<select id="slNgayBanHang">
+  <option>13/07/2025</option>
+  <option>14/07/2025</option>
+  <option>15/07/2025</option>
+</select>
+<label>Session (Phiên)</label>
+<select id="slPhien">
+  <option>Sáng</option>
+  <option>Chiều</option>
+</select>
+<label>Full name (Họ tên)</label>
+<input id="txtHoTen" placeholder="" type="text"/>
+<label>Date of birth (Ngày Sinh)</label>
+<div class="dob-inputs">
+  <input id="txtNgaySinh_Ngay" placeholder="Ngày" type="text"/>
+  <input id="txtNgaySinh_Thang" placeholder="Tháng" type="text"/>
+  <input id="txtNgaySinh_Nam" placeholder="Năm" type="text"/>
+</div>
+<label>Phone number (Số điện thoại)</label>
+<input id="txtSoDienThoai" placeholder="" type="text"/>
+<label>Email</label>
+<input id="txtEmail" placeholder="" type="email"/>
+<label>ID Card/Passport (CCCD/Hộ chiếu)</label>
+<input id="txtCCCD" placeholder="" type="text"/>
+<div class="checkbox-container">
+  <input checked id="ckbDongY" type="checkbox"/> Tôi đã đọc và đồng ý với <a href="#">Thể lệ chương trình</a>
+</div>
+<div class="captcha">
+  <canvas height="40" id="captchaCanvas" width="100"></canvas>
+  <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
+  <button onclick="generateCaptcha()">↻</button>
+</div>
+<button class="submit-btn" onclick="showPopup()">Đăng ký</button>
 </div>
 
-<!-- Form section (hidden initially) -->
-<div class="container" id="formSection">
-    <h2>ĐĂNG KÝ THAM GIA</h2>
-    <label>Sales date (Ngày bán hàng)</label>
-    <select id="slNgayBanHang">
-      <option>13/07/2025</option>
-      <option>14/07/2025</option>
-      <option>15/07/2025</option>
-    </select>
-    <label>Session (Phiên)</label>
-    <select id="slPhien">
-      <option>Sáng</option>
-      <option>Chiều</option>
-    </select>
-    <label>Full name (Họ tên)</label>
-    <input id="txtHoTen" placeholder="" type="text"/>
-    <label>Date of birth (Ngày Sinh)</label>
-    <div class="dob-inputs">
-      <input id="txtNgaySinh_Ngay" placeholder="Ngày" type="text"/>
-      <input id="txtNgaySinh_Thang" placeholder="Tháng" type="text"/>
-      <input id="txtNgaySinh_Nam" placeholder="Năm" type="text"/>
-    </div>
-    <label>Phone number (Số điện thoại)</label>
-    <input id="txtSoDienThoai" placeholder="" type="text"/>
-    <label>Email</label>
-    <input id="txtEmail" placeholder="" type="email"/>
-    <label>ID Card/Passport (CCCD/Hộ chiếu)</label>
-    <input id="txtCCCD" placeholder="" type="text"/>
-    <div class="checkbox-container">
-      <input checked id="ckbDongY" type="checkbox"/> Tôi đã đọc và đồng ý với <a href="#">Thể lệ chương trình</a>
-    </div>
-    <div class="captcha">
-      <canvas height="40" id="captchaCanvas" width="100"></canvas>
-      <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
-      <button onclick="generateCaptcha()">↻</button>
-    </div>
-    <button class="submit-btn" onclick="showPopup()">Đăng ký</button>
-</div>
-
-<!-- Success popup -->
 <div id="popupSuccess">
   <h3 style="color:#4CAF50;">🎉 Đăng ký thành công!</h3>
   <p>Cảm ơn bạn đã tham gia chương trình POP MART.</p>
@@ -86,21 +76,6 @@
 </div>
 
 <script>
-// Countdown logic
-let countdownValue = 30;
-let countdownInterval;
-
-function updateCountdown() {
-  if (countdownValue > 0) {
-    countdownValue--;
-    document.getElementById('countdown').innerText = countdownValue + " giây";
-  } else {
-    clearInterval(countdownInterval);
-    document.getElementById('countdownSection').style.display = 'none'; // Hide countdown
-    document.getElementById('formSection').style.display = 'block'; // Show form
-  }
-}
-
 function generateCaptcha() {
   const canvas = document.getElementById('captchaCanvas');
   const ctx = canvas.getContext('2d');
@@ -119,16 +94,10 @@ function generateCaptcha() {
     ctx.fill();
   }
 }
-
 function showPopup() {
   document.getElementById('popupSuccess').style.display = 'block';
 }
-
-// Start countdown when the page is loaded
-window.onload = function() {
-  countdownInterval = setInterval(updateCountdown, 1000); // Start countdown
-}
+window.onload = generateCaptcha;
 </script>
-
 </body>
 </html>
