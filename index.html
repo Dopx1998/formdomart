@@ -33,39 +33,50 @@
 <div class="header">POP MART</div>
 <div class="container">
 <h2>ĐĂNG KÝ THAM GIA</h2>
+
 <label>Sales date (Ngày bán hàng)</label>
 <select id="slNgayBanHang">
-  <option>13/07/2025</option>
-  <option>14/07/2025</option>
-  <option>15/07/2025</option>
+  <option>24/07/2025</option>
+  <option>25/07/2025</option>
+  <option>26/07/2025</option>
+  <option>27/07/2025</option>
 </select>
+
 <label>Session (Phiên)</label>
 <select id="slPhien">
-  <option>Sáng</option>
-  <option>Chiều</option>
+  <option>Sáng (10:00 - 12:00)</option>
+  <option>Chiều (13:30 - 15:30)</option>
 </select>
+
 <label>Full name (Họ tên)</label>
 <input id="txtHoTen" placeholder="" type="text"/>
+
 <label>Date of birth (Ngày Sinh)</label>
 <div class="dob-inputs">
   <input id="txtNgaySinh_Ngay" placeholder="Ngày" type="text"/>
   <input id="txtNgaySinh_Thang" placeholder="Tháng" type="text"/>
   <input id="txtNgaySinh_Nam" placeholder="Năm" type="text"/>
 </div>
+
 <label>Phone number (Số điện thoại)</label>
 <input id="txtSoDienThoai" placeholder="" type="text"/>
+
 <label>Email</label>
 <input id="txtEmail" placeholder="" type="email"/>
+
 <label>ID Card/Passport (CCCD/Hộ chiếu)</label>
 <input id="txtCCCD" placeholder="" type="text"/>
+
 <div class="checkbox-container">
   <input checked id="ckbDongY" type="checkbox"/> Tôi đã đọc và đồng ý với <a href="#">Thể lệ chương trình</a>
 </div>
+
 <div class="captcha">
   <canvas height="40" id="captchaCanvas" width="100"></canvas>
   <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
   <button onclick="generateCaptcha()">↻</button>
 </div>
+
 <button class="submit-btn" onclick="showPopup()">Đăng ký</button>
 </div>
 
