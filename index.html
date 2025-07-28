@@ -17,7 +17,7 @@
     .checkbox-container { margin-top: 16px; font-size: 14px; }
     .checkbox-container a { color: #e6a500; text-decoration: none; }
     .captcha { display: flex; align-items: center; margin-top: 12px; }
-    .captcha img { border-radius: 5px; margin-right: 8px; }
+    .captcha canvas { border-radius: 5px; margin-right: 8px; }
     .captcha input { flex: 1; }
     .captcha button { background: none; border: none; font-size: 20px; cursor: pointer; }
     .submit-btn { background-color: #e60012; color: white; padding: 12px; border: none; border-radius: 24px; font-size: 18px; width: 100%; margin-top: 16px; cursor: pointer; }
@@ -36,9 +36,11 @@
 
 <label>Sales date (Ngày bán hàng)</label>
 <select id="slNgayBanHang">
+  <option>01/08/2025</option>
+  <option>02/08/2025</option>
+  <option>03/08/2025</option>
+  <option>04/08/2025</option>
   <option>05/08/2025</option>
-  <option>06/08/2025</option>
-  <option>07/08/2025</option>
 </select>
 
 <label>Session (Phiên)</label>
@@ -71,7 +73,7 @@
 </div>
 
 <div class="captcha">
-  <img id="captchaImage" src="" height="40"/>
+  <canvas height="40" id="captchaCanvas" width="100"></canvas>
   <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
   <button onclick="generateCaptcha()">↻</button>
 </div>
@@ -87,33 +89,26 @@
 
 <script>
 function generateCaptcha() {
-  const captchaImage = document.getElementById('captchaImage');
-  
-  // Lấy captcha từ server (giả định rằng endpoint này giống như trên web gốc)
-  fetch('/Ajax.aspx?Action=LoadCaptcha')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to load captcha image');
-      }
-      return response.text();
-    })
-    .then(captchaSrc => {
-      if (captchaSrc.trim() !== "") {
-        captchaImage.src = captchaSrc.trim();
-      } else {
-        throw new Error('Received empty captcha source');
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching captcha:', error);
-      alert('Có lỗi xảy ra khi tải captcha. Vui lòng thử lại.');
-    });
+  const canvas = document.getElementById('captchaCanvas');
+  const ctx = canvas.getContext('2d');
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let captchaText = '';
+  for (let i = 0; i < 5; i++) captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
+  ctx.fillStyle = '#cccccc';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = '22px Arial';
+  ctx.fillStyle = '#000';
+  ctx.fillText(captchaText, 10, 28);
+  for (let i = 0; i < 30; i++) {
+    ctx.fillStyle = '#888';
+    ctx.beginPath();
+    ctx.arc(Math.random() * 100, Math.random() * 40, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+  }
 }
-
 function showPopup() {
   document.getElementById('popupSuccess').style.display = 'block';
 }
-
 window.onload = generateCaptcha;
 </script>
 </body>
