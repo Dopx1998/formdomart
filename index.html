@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>POP MART Đăng Ký</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>POP MART Đăng Ký</title>
+<style>
     body { font-family: Arial, sans-serif; background: white; margin: 0; padding: 0; }
     .container { max-width: 400px; margin: 0 auto; padding: 16px; }
     .header { background-color: #e60012; color: white; font-size: 32px; font-weight: bold; text-align: center; padding: 20px; }
@@ -17,86 +17,68 @@
     .checkbox-container { margin-top: 16px; font-size: 14px; }
     .checkbox-container a { color: #e6a500; text-decoration: none; }
     .captcha { display: flex; align-items: center; margin-top: 12px; }
-    .captcha img { border-radius: 5px; margin-right: 8px; }
+    .captcha canvas { border-radius: 5px; margin-right: 8px; }
     .captcha input { flex: 1; }
     .captcha button { background: none; border: none; font-size: 20px; cursor: pointer; }
     .submit-btn { background-color: #e60012; color: white; padding: 12px; border: none; border-radius: 24px; font-size: 18px; width: 100%; margin-top: 16px; cursor: pointer; }
     .submit-btn:hover { background-color: #c0000f; }
     #popupSuccess {
-      display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      background: white; border: 2px solid #4CAF50; border-radius: 12px; padding: 24px; text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;
+        display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: white; border: 2px solid #4CAF50; border-radius: 12px; padding: 24px; text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 9999;
     }
-    .MyButton {
-      background-color: #e60012;
-      color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 16px;
-      display: inline-block;
-      cursor: pointer;
-    }
-    .MyButton:hover {
-      background-color: #c0000f;
-    }
-  </style>
+</style>
 </head>
 <body>
-
 <div class="header">POP MART</div>
 <div class="container">
-  <h2>ĐĂNG KÝ THAM GIA</h2>
+<h2>ĐĂNG KÝ THAM GIA</h2>
 
-  <!-- Các trường nhập liệu -->
-  <label>Sales date (Ngày bán hàng)</label>
-  <select id="slNgayBanHang">
-    <option>01/08/2025</option>
-    <option>02/08/2025</option>
-    <option>03/08/2025</option>
-    <option>04/08/2025</option>
-    <option>05/08/2025</option>
-  </select>
+<label>Sales date (Ngày bán hàng)</label>
+<select id="slNgayBanHang">
+  <option>01/08/2025</option>
+  <option>02/08/2025</option>
+  <option>03/08/2025</option>
+  <option>04/08/2025</option>
+  <option>05/08/2025</option>
+</select>
 
-  <label>Session (Phiên)</label>
-  <select id="slPhien">
-    <option>Sáng (10:00 - 12:00)</option>
-    <option>Chiều (13:30 - 15:30)</option>
-  </select>
+<label>Session (Phiên)</label>
+<select id="slPhien">
+  <option>Sáng (10:00 - 12:00)</option>
+  <option>Chiều (13:30 - 15:30)</option>
+</select>
 
-  <label>Full name (Họ tên)</label>
-  <input id="txtHoTen" placeholder="" type="text"/>
+<label>Full name (Họ tên)</label>
+<input id="txtHoTen" placeholder="" type="text"/>
 
-  <label>Date of birth (Ngày Sinh)</label>
-  <div class="dob-inputs">
-    <input id="txtNgaySinh_Ngay" placeholder="Ngày" type="text"/>
-    <input id="txtNgaySinh_Thang" placeholder="Tháng" type="text"/>
-    <input id="txtNgaySinh_Nam" placeholder="Năm" type="text"/>
-  </div>
+<label>Date of birth (Ngày Sinh)</label>
+<div class="dob-inputs">
+  <input id="txtNgaySinh_Ngay" placeholder="Ngày" type="text"/>
+  <input id="txtNgaySinh_Thang" placeholder="Tháng" type="text"/>
+  <input id="txtNgaySinh_Nam" placeholder="Năm" type="text"/>
+</div>
 
-  <label>Phone number (Số điện thoại)</label>
-  <input id="txtSoDienThoai" placeholder="" type="text"/>
+<label>Phone number (Số điện thoại)</label>
+<input id="txtSoDienThoai" placeholder="" type="text"/>
 
-  <label>Email</label>
-  <input id="txtEmail" placeholder="" type="email"/>
+<label>Email</label>
+<input id="txtEmail" placeholder="" type="email"/>
 
-  <label>ID Card/Passport (CCCD/Hộ chiếu)</label>
-  <input id="txtCCCD" placeholder="" type="text"/>
+<label>ID Card/Passport (CCCD/Hộ chiếu)</label>
+<input id="txtCCCD" placeholder="" type="text"/>
 
-  <div class="checkbox-container">
-    <input checked id="ckbDongY" type="checkbox"/> Tôi đã đọc và đồng ý với <a href="#">Thể lệ chương trình</a>
-  </div>
+<div class="checkbox-container">
+  <input checked id="ckbDongY" type="checkbox"/> Tôi đã đọc và đồng ý với <a href="#">Thể lệ chương trình</a>
+</div>
 
-  <div id="dvCaptcha" class="captcha">
-    <img id="captchaImage" src="" alt="CAPTCHA Image"/>
-    <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
-    <button onclick="generateCaptcha()">↻</button>
-  </div>
+<div class="captcha">
+  <canvas height="40" id="captchaCanvas" width="100"></canvas>
+  <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
+  <button onclick="generateCaptcha()">↻</button>
+</div>
 
-  <!-- Nút đăng ký tham gia -->
-  <div id="dvDangKyThamDu" style="text-align:center;padding: 10px; margin-top:10px">
-    <a id="btDangKyThamGia" onclick="DangKyThamDu()" class="MyButton" style="margin-top: 3px;">Đăng ký</a>
-  </div>
+<button class="submit-btn" onclick="showPopup()">Đăng ký</button>
 </div>
 
 <div id="popupSuccess">
@@ -106,47 +88,28 @@
 </div>
 
 <script>
-  // Hàm tạo CAPTCHA
-  function generateCaptcha() {
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let captchaText = '';
-    for (let i = 0; i < 5; i++) captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#cccccc';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '22px Arial';
-    ctx.fillStyle = '#000';
-    ctx.fillText(captchaText, 10, 28);
-    for (let i = 0; i < 30; i++) {
-      ctx.fillStyle = '#888';
-      ctx.beginPath();
-      ctx.arc(Math.random() * 100, Math.random() * 40, 1.5, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-
-    // Chuyển ảnh CAPTCHA thành base64 và gán cho thẻ <img>
-    const base64Image = canvas.toDataURL();
-    document.getElementById('captchaImage').src = base64Image;
-    window.captchaText = captchaText;  // Lưu captchaText để so sánh sau
+function generateCaptcha() {
+  const canvas = document.getElementById('captchaCanvas');
+  const ctx = canvas.getContext('2d');
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let captchaText = '';
+  for (let i = 0; i < 5; i++) captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
+  ctx.fillStyle = '#cccccc';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = '22px Arial';
+  ctx.fillStyle = '#000';
+  ctx.fillText(captchaText, 10, 28);
+  for (let i = 0; i < 30; i++) {
+    ctx.fillStyle = '#888';
+    ctx.beginPath();
+    ctx.arc(Math.random() * 100, Math.random() * 40, 1.5, 0, 2 * Math.PI);
+    ctx.fill();
   }
-
-  // Hàm xử lý khi người dùng nhấn nút "Đăng ký"
-  function DangKyThamDu() {
-    const userCaptcha = document.getElementById('txtCaptcha').value;
-    if (userCaptcha !== window.captchaText) {
-      alert('Captcha không chính xác!');
-      return;
-    }
-
-    alert('Bạn đã đăng ký tham gia thành công!');
-    document.getElementById('popupSuccess').style.display = 'block';
-  }
-
-  // Tự động tạo CAPTCHA khi trang tải
-  window.onload = generateCaptcha;
+}
+function showPopup() {
+  document.getElementById('popupSuccess').style.display = 'block';
+}
+window.onload = generateCaptcha;
 </script>
-
 </body>
 </html>
