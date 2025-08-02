@@ -17,7 +17,7 @@
     .checkbox-container { margin-top: 16px; font-size: 14px; }
     .checkbox-container a { color: #e6a500; text-decoration: none; }
     .captcha { display: flex; align-items: center; margin-top: 12px; }
-    .captcha canvas { border-radius: 5px; margin-right: 8px; }
+    .captcha img { border-radius: 5px; margin-right: 8px; }
     .captcha input { flex: 1; }
     .captcha button { background: none; border: none; font-size: 20px; cursor: pointer; }
     .submit-btn { background-color: #e60012; color: white; padding: 12px; border: none; border-radius: 24px; font-size: 18px; width: 100%; margin-top: 16px; cursor: pointer; }
@@ -88,7 +88,7 @@
   </div>
 
   <div id="dvCaptcha" class="captcha">
-    <canvas height="40" id="captchaCanvas" width="100"></canvas>
+    <img id="captchaImage" src="" alt="CAPTCHA Image"/>
     <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
     <button onclick="generateCaptcha()">↻</button>
   </div>
@@ -108,11 +108,12 @@
 <script>
   // Hàm tạo CAPTCHA
   function generateCaptcha() {
-    const canvas = document.getElementById('captchaCanvas');
-    const ctx = canvas.getContext('2d');
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let captchaText = '';
     for (let i = 0; i < 5; i++) captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#cccccc';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.font = '22px Arial';
@@ -124,14 +125,22 @@
       ctx.arc(Math.random() * 100, Math.random() * 40, 1.5, 0, 2 * Math.PI);
       ctx.fill();
     }
+
+    // Chuyển ảnh CAPTCHA thành base64 và gán cho thẻ <img>
+    const base64Image = canvas.toDataURL();
+    document.getElementById('captchaImage').src = base64Image;
+    window.captchaText = captchaText;  // Lưu captchaText để so sánh sau
   }
 
   // Hàm xử lý khi người dùng nhấn nút "Đăng ký"
   function DangKyThamDu() {
-    // Bạn có thể thêm các kiểm tra hoặc xử lý khác ở đây
+    const userCaptcha = document.getElementById('txtCaptcha').value;
+    if (userCaptcha !== window.captchaText) {
+      alert('Captcha không chính xác!');
+      return;
+    }
+
     alert('Bạn đã đăng ký tham gia thành công!');
-    
-    // Hiển thị popup đăng ký thành công
     document.getElementById('popupSuccess').style.display = 'block';
   }
 
