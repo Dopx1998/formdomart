@@ -50,11 +50,9 @@
 
   <label>Sales date (Ngày bán hàng)</label>
   <select id="slNgayBanHang">
-    <option>01/08/2025</option>
-    <option>02/08/2025</option>
-    <option>03/08/2025</option>
-    <option>04/08/2025</option>
-    <option>05/08/2025</option>
+    <option>08/08/2025</option>
+    <option>09/08/2025</option>
+    <option>10/08/2025</option>
   </select>
 
   <label>Session (Phiên)</label>
@@ -129,7 +127,7 @@
     // Chữ nghiêng
     ctx.font = 'italic 26px Arial';
     ctx.fillStyle = '#111';
-    ctx.setTransform(1, 0.1, 0, 1, 10, 28); // nghiêng nhẹ, căn trái
+    ctx.setTransform(1, 0.1, 0, 1, 10, 28);
     ctx.fillText(captchaText, 0, 0);
 
     document.getElementById('captchaImage').src = canvas.toDataURL();
