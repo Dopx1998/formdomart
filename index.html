@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -37,15 +36,38 @@
       display: inline-block;
       cursor: pointer;
     }
-    .MyButton:hover {
-      background-color: #c0000f;
+    .MyButton:hover { background-color: #c0000f; }
+
+    /* Overlay đếm ngược */
+    #countdownOverlay {
+      position: fixed; inset: 0; background: white; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 10000; text-align: center; padding: 24px;
     }
+    #countdownOverlay .big {
+      font-size: 48px; font-weight: bold; margin: 10px 0;
+    }
+
+    /* Hiệu ứng hiện form mượt hơn */
+    #registrationForm { opacity: 0; transition: opacity .4s ease; }
+    #registrationForm.show { opacity: 1; }
   </style>
 </head>
 <body>
 
+<!-- Lớp đếm ngược -->
+<div id="countdownOverlay" aria-live="polite" aria-busy="true">
+  <div style="max-width: 520px;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Pop_Mart_logo.svg/320px-Pop_Mart_logo.svg.png" alt="POP MART" style="max-width:180px; height:auto; margin-bottom:16px;">
+    <h2>Vui lòng chờ để mở form đăng ký</h2>
+    <div class="big"><span id="countdownNumber">30</span>s</div>
+    <p>Hệ thống sẽ tự động mở form sau khi đếm ngược kết thúc.</p>
+  </div>
+</div>
+
 <div class="header">POP MART</div>
-<div class="container">
+
+<!-- Form ẩn trong lúc đếm ngược -->
+<div class="container" id="registrationForm" style="display:none;">
   <h2>ĐĂNG KÝ THAM GIA</h2>
 
   <label>Sales date (Ngày bán hàng)</label>
@@ -87,7 +109,7 @@
   <div id="dvCaptcha" class="captcha">
     <img id="captchaImage" src="" alt="CAPTCHA Image"/>
     <input id="txtCaptcha" placeholder="Nhập captcha" type="text"/>
-    <button onclick="generateCaptcha()">↻</button>
+    <button type="button" onclick="generateCaptcha()" aria-label="Tải lại captcha">↻</button>
   </div>
 
   <div id="dvDangKyThamDu" style="text-align:center;padding: 10px; margin-top:10px">
@@ -137,7 +159,28 @@
     document.getElementById('popupSuccess').style.display = 'block';
   }
 
-  window.onload = generateCaptcha;
+  // Đếm ngược 30 giây rồi mở form
+  let countdown = 30;
+  function startCountdown() {
+    const countdownElement = document.getElementById('countdownNumber');
+    const overlay = document.getElementById('countdownOverlay');
+    const form = document.getElementById('registrationForm');
+
+    const interval = setInterval(() => {
+      countdown = Math.max(0, countdown - 1);
+      countdownElement.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(interval);
+        overlay.style.display = 'none';
+        form.style.display = 'block';
+        // kích hoạt hiệu ứng fade-in
+        requestAnimationFrame(() => form.classList.add('show'));
+        generateCaptcha();
+      }
+    }, 1000);
+  }
+
+  window.onload = startCountdown;
 </script>
 
 </body>
